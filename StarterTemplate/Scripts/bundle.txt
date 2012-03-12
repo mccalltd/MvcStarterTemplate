@@ -1,0 +1,10 @@
+﻿jquery-1.7.1.js
+jquery.validate.js
+jquery.validate.unobtrusive.js
+jquery.placeholder.js
+modernizr-2.5.3.js
+bootstrap.js
+knockout.debug.js
+knockout.mapping-latest.debug.js
+application.js
+application.header.js

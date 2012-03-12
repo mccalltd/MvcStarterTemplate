@@ -1,0 +1,12 @@
+﻿<div id="modal" class="modal fade @ViewBag.ModalClass">
+    <div class="modal-header">
+        <a class="close" data-dismiss="modal">×</a>
+        <h2 data-bind="@ViewBag.ModalHeaderDataBinding">@ViewBag.ModalHeader</h2>
+    </div>
+    <div class="modal-body clearfix">
+        @RenderBody()
+    </div>
+    <div class="modal-footer">
+        @RenderSection("footer", false)
+    </div>    
+</div>

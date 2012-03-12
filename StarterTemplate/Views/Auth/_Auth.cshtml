@@ -1,0 +1,93 @@
+﻿@model AuthIndexModel
+@{
+    Layout = "~/Views/Shared/_ModalLayout.cshtml";
+    ViewBag.ModalHeader = Model.ActivePanel == "log-in" ? "Log In" : "Sign Up";
+    ViewBag.ModalHeaderDataBinding = "text: authFormModalHeader";
+    ViewBag.ModalClass = "auth";
+}
+
+<div class="panel" data-bind="visible: authFormActivePanel() === 'log-in'" @Html.DisplayIf(Model.ActivePanel == "log-in")>
+    <h6>Please log in below</h6>
+
+    @Html.ClientValidationSummaryErrorsTemplate("We could not log you in.", "logInFormServerErrors")
+    
+    @using (Html.BeginAjaxLoadedBootstrapForm("LogIn", htmlAttributes: new { id = "logInForm", data_bind = "submit: submitLogInForm" })) 
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.ReturnUrl)
+        @Html.BootstrapControlGroupFor(m => m.LogInModel.EmailAddress)
+        @Html.BootstrapControlGroupFor(m => m.LogInModel.Password)
+        @Html.BootstrapFormActions("Log In")
+    }
+</div>
+
+<div class="panel" data-bind="visible: authFormActivePanel() === 'sign-up'" @Html.DisplayIf(Model.ActivePanel == "sign-up")>
+    <h6>Sign up below</h6>
+           
+    @Html.ClientValidationSummaryErrorsTemplate("We could not sign you up.", "signUpFormServerErrors")
+
+    @using (Html.BeginAjaxLoadedBootstrapForm("SignUp", htmlAttributes: new { id = "signUpForm", data_bind = "submit: submitSignUpForm" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.BootstrapControlGroupFor(m => m.SignUpModel.EmailAddress)
+        @Html.BootstrapControlGroupFor(m => m.SignUpModel.Password)
+        @Html.BootstrapFormActions("Sign Up")
+    }
+</div>
+
+<div class="panel" data-bind="visible: authFormActivePanel() === 'forgot-password'" @Html.DisplayIf(false)>
+    <h6>Enter your email address, and we'll send you a new password</h6>
+           
+    @Html.ClientValidationSummaryErrorsTemplate("We could not reset your password.", "forgotPasswordFormServerErrors")
+
+    @using (Html.BeginAjaxLoadedBootstrapForm("ForgotPassword", htmlAttributes: new { id = "forgotPasswordForm", data_bind = "submit: submitForgotPasswordForm" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.BootstrapControlGroupFor(m => m.ForgotPasswordModel.EmailAddress)
+        @Html.BootstrapFormActions("Reset Password")
+    }
+</div>
+
+<div class="panel" data-bind="visible: authFormActivePanel() === 'forgot-password-confirmation'" @Html.DisplayIf(false)>
+    <p class="alert">
+        <strong>We just sent you a new password.</strong>
+        Please check your email inbox for an email from us with your new password.
+        When you are ready, click login below to login.
+    </p>
+</div>
+
+<div class="panel" data-bind="visible: authFormActivePanel() === 'change-password'" @Html.DisplayIf(false)>
+    <h6>The password we sent is only intended to be used once</h6>
+           
+    @Html.ClientValidationSummaryErrorsTemplate("We could not change your password.", "changePasswordFormServerErrors")
+
+    @using (Html.BeginAjaxLoadedBootstrapForm("ChangePassword", htmlAttributes: new { id = "changePasswordForm", data_bind = "submit: submitChangePasswordForm" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.BootstrapControlGroupFor(m => m.ChangePasswordModel.NewPassword)
+        @Html.BootstrapFormActions("Change Password")
+    }
+</div>
+
+@section footer
+{
+    <ul class="unstyled">        
+        <!-- ko if: authFormActivePanel() === 'log-in' -->
+        <li><a href="#" data-bind="click: showForgotPasswordForm, visible: true" @Html.DisplayIf(Model.ActivePanel == "log-in")>Forgot your password?</a></li>
+        <li><a href="#" data-bind="click: showSignUpForm, visible: true" @Html.DisplayIf(Model.ActivePanel == "log-in")>Need an account?</a></li>
+        <!-- /ko -->
+    
+        <!-- ko if: authFormActivePanel() === 'sign-up' -->
+        <li><a href="#" data-bind="click: showLogInForm, visible: true" @Html.DisplayIf(Model.ActivePanel == "sign-up")>Have an account?</a></li>
+        <!-- /ko -->
+    
+        <!-- ko if: authFormActivePanel() === 'forgot-password' -->
+        <li><a href="#" data-bind="click: showLogInForm, visible: true" @Html.DisplayIf(false)>Remember your password?</a></li>
+        <li><a href="#" data-bind="click: showSignUpForm, visible: true" @Html.DisplayIf(false)>Need an account?</a></li>
+        <!-- /ko -->
+        
+        <!-- ko if: authFormActivePanel() === 'forgot-password-confirmation' -->
+        <li><a href="#" data-bind="click: showLogInForm, visible: true" @Html.DisplayIf(false)>Ready to log in?</a></li>
+        <!-- /ko -->
+    </ul>    
+}

@@ -1,0 +1,32 @@
+﻿@{
+    ViewBag.Title = "Sign In";
+    ViewBag.BodyId = "auth";
+}
+
+<div class="hero-unit">
+    <h1>Not So Fast!</h1>        
+    <p>
+        You're trying to access restricted content. 
+        <br />Please sign in first.
+    </p>        
+    <div class="actions">
+        <a href="#" class="sign-in btn btn-primary btn-xlarge">
+            <i class="icon-key"></i>
+            Sign In
+        </a>
+    </div>
+</div>
+
+@section scripts
+{
+    <script type="text/javascript">
+        $(function () {
+            $('.sign-in')
+                .click(function () {
+                    $('#logInLink').click();
+                    return false;
+                })
+                .click();
+        });
+    </script>
+}
