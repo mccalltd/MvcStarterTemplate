@@ -2,6 +2,7 @@
 jquery.validate.js
 jquery.validate.unobtrusive.js
 jquery.placeholder.js
+jquery.autoResize.js
 modernizr-2.5.3.js
 bootstrap.js
 knockout.debug.js

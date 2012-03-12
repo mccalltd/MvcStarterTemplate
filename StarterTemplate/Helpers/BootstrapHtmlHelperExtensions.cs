@@ -10,6 +10,35 @@ namespace StarterTemplate.Helpers
 {
     public static class BootstrapHtmlHelperExtensions
     {
+        public static MvcHtmlString BootstrapClientValidationSummaryTemplate(this HtmlHelper helper, string message, string viewModelServerErrorsPropertyPath)
+        {
+            var validationSummaryErrors = new TagBuilder("div");
+            validationSummaryErrors.AddCssClass("validation-summary-errors alert alert-error");
+            validationSummaryErrors.Attributes.Add("data-bind", "visible: {0}().length > 0".FormatWith(viewModelServerErrorsPropertyPath));
+            validationSummaryErrors.Attributes.Add("style", "display: none");
+
+            var span = new TagBuilder("span");
+            span.SetInnerText(message);
+
+            validationSummaryErrors.InnerHtml += span;
+
+            var ul = new TagBuilder("ul");
+            ul.Attributes.Add("data-bind", "foreach: {0}".FormatWith(viewModelServerErrorsPropertyPath));
+
+            var li = new TagBuilder("li");
+            li.Attributes.Add("data-bind", "text: $data");
+
+            ul.InnerHtml += li;
+            validationSummaryErrors.InnerHtml += ul;
+
+            return MvcHtmlString.Create(validationSummaryErrors.ToString());
+        }
+
+        public static MvcHtmlString BootstrapValidationSummary(this HtmlHelper helper, string message)
+        {
+            return helper.ValidationSummary(message, new { @class = "alert alert-error" });
+        }
+
         public static BootstrapContent BeginBootstrapNavDropdown(this HtmlHelper helper, string linkText, string linkUrl = null, object htmlAttributes = null)
         {
             var writer = helper.ViewContext.Writer;
@@ -67,7 +96,7 @@ namespace StarterTemplate.Helpers
             return BeginBootstrapForm(helper, action, controller, routeValues, htmlAttributesDict);
         }
 
-        public static MvcForm BeginBootstrapForm(this HtmlHelper helper, string action = null, string controller = null, object routeValues = null, IDictionary<string, object> htmlAttributes = null)
+        private static MvcForm BeginBootstrapForm(this HtmlHelper helper, string action = null, string controller = null, object routeValues = null, IDictionary<string, object> htmlAttributes = null)
         {
             var routeData = helper.ViewContext.RouteData;
             var actionName = action ?? routeData.GetRequiredString("action");

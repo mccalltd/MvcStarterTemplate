@@ -9,7 +9,7 @@
 <div class="panel" data-bind="visible: authFormActivePanel() === 'log-in'" @Html.DisplayIf(Model.ActivePanel == "log-in")>
     <h6>Please log in below</h6>
 
-    @Html.ClientValidationSummaryErrorsTemplate("We could not log you in.", "logInFormServerErrors")
+    @Html.BootstrapClientValidationSummaryTemplate("We could not log you in.", "logInFormServerErrors")
     
     @using (Html.BeginAjaxLoadedBootstrapForm("LogIn", htmlAttributes: new { id = "logInForm", data_bind = "submit: submitLogInForm" })) 
     {
@@ -24,7 +24,7 @@
 <div class="panel" data-bind="visible: authFormActivePanel() === 'sign-up'" @Html.DisplayIf(Model.ActivePanel == "sign-up")>
     <h6>Sign up below</h6>
            
-    @Html.ClientValidationSummaryErrorsTemplate("We could not sign you up.", "signUpFormServerErrors")
+    @Html.BootstrapClientValidationSummaryTemplate("We could not sign you up.", "signUpFormServerErrors")
 
     @using (Html.BeginAjaxLoadedBootstrapForm("SignUp", htmlAttributes: new { id = "signUpForm", data_bind = "submit: submitSignUpForm" }))
     {
@@ -38,7 +38,7 @@
 <div class="panel" data-bind="visible: authFormActivePanel() === 'forgot-password'" @Html.DisplayIf(false)>
     <h6>Enter your email address, and we'll send you a new password</h6>
            
-    @Html.ClientValidationSummaryErrorsTemplate("We could not reset your password.", "forgotPasswordFormServerErrors")
+    @Html.BootstrapClientValidationSummaryTemplate("We could not reset your password.", "forgotPasswordFormServerErrors")
 
     @using (Html.BeginAjaxLoadedBootstrapForm("ForgotPassword", htmlAttributes: new { id = "forgotPasswordForm", data_bind = "submit: submitForgotPasswordForm" }))
     {
@@ -59,7 +59,7 @@
 <div class="panel" data-bind="visible: authFormActivePanel() === 'change-password'" @Html.DisplayIf(false)>
     <h6>The password we sent is only intended to be used once</h6>
            
-    @Html.ClientValidationSummaryErrorsTemplate("We could not change your password.", "changePasswordFormServerErrors")
+    @Html.BootstrapClientValidationSummaryTemplate("We could not change your password.", "changePasswordFormServerErrors")
 
     @using (Html.BeginAjaxLoadedBootstrapForm("ChangePassword", htmlAttributes: new { id = "changePasswordForm", data_bind = "submit: submitChangePasswordForm" }))
     {

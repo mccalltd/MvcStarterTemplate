@@ -5,6 +5,7 @@
         wireControls: function (containerElementOrSelector) {
             $(containerElementOrSelector)
                 .find('[placeholder]').placeholder().end()
+                .find('textarea').autoResize({ extraSpace: 36 }).end()
                 .find('[rel=tooltip]').tooltip().end();
         },
         resetForm: function (containerElementOrSelector) {

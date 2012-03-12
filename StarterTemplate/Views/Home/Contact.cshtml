@@ -1,0 +1,19 @@
+﻿@model HomeContactModel
+@{
+    ViewBag.Title = "Contact";
+}
+
+<div class="page-header">
+    <h1>Contact</h1>
+</div>
+
+@Html.BootstrapValidationSummary("We could not send your message.")
+
+@using (Html.BeginBootstrapForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.BootstrapControlGroupFor(m => m.Name)    
+    @Html.BootstrapControlGroupFor(m => m.EmailAddress)    
+    @Html.BootstrapControlGroupFor(m => m.Message)    
+    @Html.BootstrapFormActions("Send Message", "envelope")    
+}

@@ -27,12 +27,16 @@
 
 body { padding: 60px 0 40px; }
 
+#main { min-height: 300px; }
+
+#page-footer .links li { display: inline;margin-right: 9px; }
+
 /* Control widget styles
 ***************************/
 
 .placeholder { color: #999; }
 
-.validation-summary-errors { margin: 9px 0;}
+.validation-summary-errors { margin: 9px 0 18px;}
 .validation-summary-errors span {display: block; font-weight: bold; line-height: 18px; margin-bottom: 9px;}
 .validation-summary-errors ul { margin-bottom: 0; }
 [class^="field-validation-"], [class*=" field-validation-"] { font-style: italic;font-size: 0.9em;font-weight: bold;}

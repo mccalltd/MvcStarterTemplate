@@ -103,7 +103,7 @@ namespace StarterTemplate.Controllers
                 && Try(() =>
                 {
                     var member = _securityService.SignUp(model.EmailAddress, model.Password);
-                    _mailer.SendWelcomeMessage(new MailWelcomeModel(member)).DeliverAsync();
+                    _mailer.SendWelcomeMessage(member).DeliverAsync();
                 }))
             {
                 FormsAuthentication.SetAuthCookie(model.EmailAddress, true);
@@ -122,7 +122,7 @@ namespace StarterTemplate.Controllers
                 {
                     var emailAddress = model.EmailAddress;
                     var newPassword = _securityService.ResetPassword(emailAddress);
-                    _mailer.SendResetPasswordMessage(new MailResetPasswordModel(emailAddress, newPassword)).DeliverAsync();
+                    _mailer.SendResetPasswordMessage(emailAddress, newPassword).DeliverAsync();
                 }))
             {
                 return JsonSuccess();                

@@ -24,10 +24,12 @@
         <header id="page-header">
             @{ Html.RenderPartial("_PageHeader"); }
         </header>
-        <section id="main" class="container">
-            @RenderBody()
+        <section id="main">
+            <div class="container">
+                @RenderBody()                
+            </div>
         </section>
-        <footer id="page-footer" class="container">
+        <footer id="page-footer">
             @{ Html.RenderPartial("_PageFooter"); }
         </footer>
 
