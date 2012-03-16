@@ -8,8 +8,8 @@ namespace StarterTemplate.Core.Services
 {
     public interface ISecurityService
     {
-        void ValidateLogin(string emailAddress, string password);
-        Member SignUp(string emailAddress, string password);
+        Member ValidateLogin(string usernameOrEmailAddress, string password);
+        Member SignUp(string username, string emailAddress, string password);
         string ResetPassword(string emailAddress);
         void ChangePassword(string newPassword);
     }
@@ -28,24 +28,27 @@ namespace StarterTemplate.Core.Services
             _currentUserContext = currentUserContext;
         }
 
-        public void ValidateLogin(string emailAddress, string password)
+        public Member ValidateLogin(string usernameOrEmailAddress, string password)
         {
-            var member = _repository.First<Member>(m => m.EmailAddress == emailAddress);
+            var member = _repository.First<Member>(m => m.Username == usernameOrEmailAddress || m.EmailAddress == usernameOrEmailAddress);
             if (member == null)
-                throw new ApplicationException("The email address or password is incorrect.");
+                throw new ApplicationException("The username or email address or password is incorrect.");
 
             if (!BCryptHelper.CheckPassword(password, member.PasswordHash))
-                throw new ApplicationException("The email address or password is incorrect.");
+                throw new ApplicationException("The username or email address or password is incorrect.");
 
             member.LastLoginDate = DateTime.Now;
             
             _repository.SaveChanges();
+
+            return member;
         }
 
-        public Member SignUp(string emailAddress, string password)
+        public Member SignUp(string username, string emailAddress, string password)
         {
             var member = new Member
             {
+                Username = username,
                 EmailAddress = emailAddress,
                 PasswordHash = HashPassword(password),
                 LastLoginDate = DateTime.Now

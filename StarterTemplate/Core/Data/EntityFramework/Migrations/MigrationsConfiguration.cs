@@ -1,10 +1,9 @@
 using System;
 using System.Data.Entity.Migrations;
 using DevOne.Security.Cryptography.BCrypt;
-using StarterTemplate.Core.Data.EntityFramework;
 using StarterTemplate.Core.Domain;
 
-namespace StarterTemplate.Core.Migrations
+namespace StarterTemplate.Core.Data.EntityFramework.Migrations
 {
     public sealed class MigrationsConfiguration : DbMigrationsConfiguration<ApplicationDbContext>
     {
@@ -23,6 +22,7 @@ namespace StarterTemplate.Core.Migrations
                 p => p.EmailAddress,
                 new Member
                 {
+                    Username = "webmaster",
                     EmailAddress = "webmaster@domain.com",
                     PasswordHash = BCryptHelper.HashPassword("webmaster", BCryptHelper.GenerateSalt(12)),
                     IsAdministrator = true,

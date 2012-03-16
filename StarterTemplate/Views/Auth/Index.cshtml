@@ -7,12 +7,12 @@
     <h1>Not So Fast!</h1>        
     <p>
         You're trying to access restricted content. 
-        <br />Please sign in first.
+        <br />Please log in first.
     </p>        
     <div class="actions">
-        <a href="#" class="sign-in btn btn-primary btn-xlarge">
+        <a href="#" class="log-in btn btn-primary btn-xlarge">
             <i class="icon-key"></i>
-            Sign In
+            Log In
         </a>
     </div>
 </div>
@@ -21,12 +21,10 @@
 {
     <script type="text/javascript">
         $(function () {
-            $('.sign-in')
-                .click(function () {
-                    $('#logInLink').click();
-                    return false;
-                })
-                .click();
+            $('.log-in').click(function() {
+                $('#logInLink').click();
+                return false;
+            });
         });
     </script>
 }

@@ -8,6 +8,12 @@ namespace StarterTemplate.Controllers
     [RoutePrefix("validate")]
     public class ValidateController : ApplicationControllerBase
     {
+        [POST("username-is-available")]
+        public ActionResult UsernameIsAvailable(FormCollection form)
+        {
+            return JsonValidate<UsernameIsAvailableAttribute>(form);
+        }
+
         [POST("email-is-available")]
         public ActionResult EmailIsAvailable(FormCollection form)
         {

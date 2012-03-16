@@ -154,15 +154,17 @@
     <Compile Include="Controllers\ValidateController.cs" />
     <Compile Include="Core\CoreRegistry.cs" />
     <Compile Include="Core\CurrentUserContext.cs" />
+    <Compile Include="Core\Data\EntityFramework\EntityFrameworkReadOnlyRepository.cs" />
     <Compile Include="Core\Data\EntityFramework\EntityFrameworkRepository.cs" />
     <Compile Include="Core\Data\EntityFramework\ApplicationDbContext.cs" />
+    <Compile Include="Core\Data\IReadOnlyRepository.cs" />
     <Compile Include="Core\Data\IRepository.cs" />
     <Compile Include="Core\DisposableObject.cs" />
     <Compile Include="Core\Domain\EntityBase.cs" />
     <Compile Include="Core\Domain\Member.cs" />
     <Compile Include="Core\Extensions\ObjectExtensions.cs" />
     <Compile Include="Core\Extensions\StringExtensions.cs" />
-    <Compile Include="Core\Migrations\MigrationsConfiguration.cs" />
+    <Compile Include="Core\Data\EntityFramework\Migrations\MigrationsConfiguration.cs" />
     <Compile Include="Core\Services\SecurityService.cs" />
     <Compile Include="Core\Validation\EmailAttribute.cs" />
     <Compile Include="Core\Validation\EmailIsAvailableAttribute.cs" />
@@ -170,6 +172,8 @@
     <Compile Include="Configuration\StructuremapDependencyResolver.cs" />
     <Compile Include="Core\Validation\EmailIsRegisteredAttribute.cs" />
     <Compile Include="Core\Validation\PasswordAttribute.cs" />
+    <Compile Include="Core\Validation\UsernameAttribute.cs" />
+    <Compile Include="Core\Validation\UsernameIsAvailableAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

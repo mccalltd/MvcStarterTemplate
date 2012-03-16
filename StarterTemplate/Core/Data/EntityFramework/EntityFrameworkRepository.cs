@@ -1,44 +1,24 @@
 using System;
 using System.Data;
-using System.Linq;
+using System.Data.Entity;
 using System.Linq.Expressions;
 using StarterTemplate.Core.Domain;
 using StarterTemplate.Core.Extensions;
 
 namespace StarterTemplate.Core.Data.EntityFramework
 {
-    public class EntityFrameworkRepository : IRepository 
+    public class EntityFrameworkRepository : EntityFrameworkReadOnlyRepository, IRepository 
     {
-        private readonly ApplicationDbContext _context;
+        private readonly DbContext _context;
         private readonly CurrentUserContext _currentUserContext;
 
         public EntityFrameworkRepository(
-            ApplicationDbContext context, 
+            DbContext context, 
             CurrentUserContext currentUserContext
-            )
+            ) : base(context)
         {
             _context = context;
             _currentUserContext = currentUserContext;
-        }
-
-        public IQueryable<TEntity> All<TEntity>() where TEntity : ImmutableEntityBase
-        {
-            return _context.Set<TEntity>();
-        }
-
-        public IQueryable<TEntity> All<TEntity>(Expression<Func<TEntity, bool>> where) where TEntity : ImmutableEntityBase
-        {
-            return All<TEntity>().Where(where);
-        }
-
-        public TEntity Get<TEntity>(long id) where TEntity : ImmutableEntityBase
-        {
-            return All<TEntity>().SingleOrDefault(x => x.Id == id);
-        }
-
-        public TEntity First<TEntity>(Expression<Func<TEntity, bool>> where) where TEntity : ImmutableEntityBase
-        {
-            return All<TEntity>().FirstOrDefault(where);
         }
 
         public void Add<TEntity>(TEntity entity) where TEntity : ImmutableEntityBase
@@ -70,7 +50,7 @@ namespace StarterTemplate.Core.Data.EntityFramework
         public void SaveChanges()
         {
             var now = DateTime.Now;
-            var member = First<Member>(m => m.EmailAddress == _currentUserContext.Username);
+            var memberId = _currentUserContext.SafeGet(c => c.Member.Id);
 
             foreach (var dbEntityEntry in _context.ChangeTracker.Entries())
             {
@@ -81,7 +61,7 @@ namespace StarterTemplate.Core.Data.EntityFramework
                     var immutableEntity = dbEntityEntry.Entity as ImmutableEntityBase;
                     if (immutableEntity != null)
                     {
-                        immutableEntity.CreatedByMemberId = member.SafeGet(m => m.Id);
+                        immutableEntity.CreatedByMemberId = memberId;
                         immutableEntity.CreatedDate = now;
                     }
                 }
@@ -91,7 +71,7 @@ namespace StarterTemplate.Core.Data.EntityFramework
                     var mutableEntity = dbEntityEntry.Entity as MutableEntityBase;
                     if (mutableEntity != null)
                     {
-                        mutableEntity.ModifiedByMemberId = member.SafeGet(m => m.Id);
+                        mutableEntity.ModifiedByMemberId = memberId;
                         mutableEntity.ModifiedDate = now;
                     }
                 }

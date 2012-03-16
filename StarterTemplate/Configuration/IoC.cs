@@ -1,3 +1,4 @@
+using System.Data.Entity;
 using StarterTemplate.Core;
 using StarterTemplate.Core.Data;
 using StarterTemplate.Core.Data.EntityFramework;
@@ -17,8 +18,10 @@ namespace StarterTemplate.Configuration
                     scan.WithDefaultConventions();
                 });
 
+                x.For<DbContext>().Use<ApplicationDbContext>();
+                x.For<IReadOnlyRepository>().Use<EntityFrameworkReadOnlyRepository>();
                 x.For<IRepository>().Use<EntityFrameworkRepository>();
-                x.For<CurrentUserContext>().Use(CurrentUserContext.FromCurrentHttpContext);
+                x.For<CurrentUserContext>().HybridHttpOrThreadLocalScoped().Use<CurrentUserContext>();
             });
 
             return ObjectFactory.Container;

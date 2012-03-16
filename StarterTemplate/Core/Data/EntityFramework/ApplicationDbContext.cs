@@ -1,6 +1,6 @@
 ﻿using System.Data.Entity;
+using StarterTemplate.Core.Data.EntityFramework.Migrations;
 using StarterTemplate.Core.Domain;
-using StarterTemplate.Core.Migrations;
 
 namespace StarterTemplate.Core.Data.EntityFramework
 {

@@ -15,7 +15,7 @@
     {
         @Html.AntiForgeryToken()
         @Html.HiddenFor(m => m.ReturnUrl)
-        @Html.BootstrapControlGroupFor(m => m.LogInModel.EmailAddress)
+        @Html.BootstrapControlGroupFor(m => m.LogInModel.UsernameOrEmailAddress)
         @Html.BootstrapControlGroupFor(m => m.LogInModel.Password)
         @Html.BootstrapFormActions("Log In")
     }
@@ -29,6 +29,7 @@
     @using (Html.BeginAjaxLoadedBootstrapForm("SignUp", htmlAttributes: new { id = "signUpForm", data_bind = "submit: submitSignUpForm" }))
     {
         @Html.AntiForgeryToken()
+        @Html.BootstrapControlGroupFor(m => m.SignUpModel.Username)
         @Html.BootstrapControlGroupFor(m => m.SignUpModel.EmailAddress)
         @Html.BootstrapControlGroupFor(m => m.SignUpModel.Password)
         @Html.BootstrapFormActions("Sign Up")

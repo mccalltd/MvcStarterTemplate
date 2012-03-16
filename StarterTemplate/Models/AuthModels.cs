@@ -25,8 +25,7 @@ namespace StarterTemplate.Models
     public class AuthLogInModel
     {
         [Required]
-        [DataType(DataType.EmailAddress)]
-        public string EmailAddress { get; set; }
+        public string UsernameOrEmailAddress { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
@@ -35,6 +34,11 @@ namespace StarterTemplate.Models
 
     public class AuthSignUpModel
     {
+        [Required]
+        [Username]
+        [UsernameIsAvailable]
+        public string Username { get; set; }
+
         [Required]
         [Email]
         [EmailIsAvailable]

@@ -56,13 +56,14 @@ namespace StarterTemplate.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LogIn([Bind(Prefix = "LogInModel")] AuthLogInModel model, string returnUrl)
         {
+            Member member = null;
+
             if (ModelState.IsValid
-                && Try(() => _securityService.ValidateLogin(model.EmailAddress, model.Password)))
+                && Try(() => member = _securityService.ValidateLogin(model.UsernameOrEmailAddress, model.Password)))
             {
-                FormsAuthentication.SetAuthCookie(model.EmailAddress, true);
+                Authenticate(member.Username);
 
                 // Prompt the user to change their password if logging in with reset password.
-                var member = _repository.First<Member>(m => m.EmailAddress == model.EmailAddress);
                 if (member.MustChangePasswordOnNextLogin)
                     return JsonSuccess(new { mustChangePassword = true });
 
@@ -99,18 +100,26 @@ namespace StarterTemplate.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult SignUp([Bind(Prefix = "SignUpModel")] AuthSignUpModel model)
         {
+            Member member = null;
+
             if (ModelState.IsValid
                 && Try(() =>
                 {
-                    var member = _securityService.SignUp(model.EmailAddress, model.Password);
+                    member = _securityService.SignUp(model.Username, model.EmailAddress, model.Password);
                     _mailer.SendWelcomeMessage(member).DeliverAsync();
                 }))
             {
-                FormsAuthentication.SetAuthCookie(model.EmailAddress, true);
+                Authenticate(member.Username);
                 return JsonSuccess();
             }
 
             return JsonFailure();
+        }
+
+        private void Authenticate(string username)
+        {
+            FormsAuthentication.SetAuthCookie(username, true);
+            _currentUserContext.Authenticate(username);
         }
 
         [POST("forgot-password")]

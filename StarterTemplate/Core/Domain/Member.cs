@@ -7,6 +7,9 @@ namespace StarterTemplate.Core.Domain
     public class Member : MutableEntityBase
     {
         [Required]
+        public string Username { get; set; }
+
+        [Required]
         [Email]
         public string EmailAddress { get; set; }
 
